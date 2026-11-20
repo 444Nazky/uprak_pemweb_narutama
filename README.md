@@ -1,58 +1,112 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistem Kotak Aspirasi Sekolah
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi web untuk menampung laporan sarana prasarana dan masukan siswa SMK Plus Pelita Nusantara Bogor. Dibuat untuk Ujian Praktik Kejuruan Pemrograman Web kelas XI RPL.
 
-## About Laravel
+## Teknologi
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Laravel 13 (PHP 8.3 atau lebih baru), pola MVC
+- Blade Templating dengan master layout dan komponen
+- Bootstrap 5.3 untuk grid, form, modal, dan pagination
+- CSS kustom di `public/css/app.css` sebagai design system
+- Chart.js untuk grafik dashboard admin
+- MySQL atau MariaDB
+- Seluruh aset pihak ketiga disimpan lokal di `public/vendor` dan `public/fonts`, jadi aplikasi tetap tampil normal tanpa internet
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Fitur wajib:
 
-## Learning Laravel
+- Registrasi siswa dengan kolom kelas, login, logout melalui POST dan CSRF
+- Middleware `auth` dan `AdminMiddleware` dengan alias `admin`
+- Validasi kepemilikan data pada detail aspirasi, siswa lain mendapat 403
+- CRUD aspirasi siswa dengan unggah foto bukti maksimal 2 MB
+- Panel admin: dashboard statistik, filter status dan kategori, pagination, tanggapan, hapus dengan konfirmasi
+- Badge status semantik, flash message, empty state, dan layout responsif
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Fitur pengembangan mandiri, total 10 poin:
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. Pencarian kata kunci pada daftar aspirasi admin, mencakup judul, isi, lokasi, dan nama siswa (2 poin)
+2. Siswa dapat mengubah atau menghapus aspirasinya selama status masih Menunggu (2 poin)
+3. Tingkat prioritas Rendah, Sedang, Tinggi beserta pengurutan di panel admin (3 poin)
+4. Grafik statistik per kategori dan enam bulan terakhir dengan Chart.js (3 poin)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Akun uji
 
-## Agentic Development
+| Peran | Email | Kata sandi |
+| --- | --- | --- |
+| Admin | admin@pelitanusantara.sch.id | admin12345 |
+| Siswa | siswa@pelitanusantara.sch.id | siswa12345 |
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Seeder juga membuat akun siswa lain dengan kata sandi `siswa12345`: `nadya.prameswari@`, `rafi.hidayat@`, `salsabila.rahma@`, dan `yoga.prasetya@pelitanusantara.sch.id`. Daftar lengkap ada di `deliverables/akun-dan-fitur.txt`.
 
-```bash
-composer require laravel/boost --dev
+## Cara menjalankan
 
-php artisan boost:install
-```
+1. Pastikan PHP 8.3+, Composer, dan MySQL atau MariaDB tersedia.
+2. Salin konfigurasi lingkungan.
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-## Contributing
+3. Buat database `aspirasi_sekolah`, lalu sesuaikan `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, dan `DB_PASSWORD` di `.env`.
+4. Pasang dependensi dan siapkan data.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   ```bash
+   composer install
+   php artisan migrate --seed
+   php artisan storage:link
+   ```
 
-## Code of Conduct
+5. Jalankan server.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+   ```bash
+   php artisan serve
+   ```
 
-## Security Vulnerabilities
+6. Buka `http://127.0.0.1:8000`.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Tidak perlu menjalankan `npm install` atau `npm run build`. Aset CSS, JavaScript, ikon, dan font sudah tersedia di folder `public`.
 
-## License
+Untuk memulihkan data demo, jalankan `php artisan migrate:fresh --seed`. Untuk memakai file SQL yang disertakan, impor `deliverables/aspirasi_sekolah.sql` melalui phpMyAdmin atau perintah `mysql -u root -p < deliverables/aspirasi_sekolah.sql`.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Struktur penting
+
+| Lokasi | Isi |
+| --- | --- |
+| `app/Http/Controllers` | Controller publik, siswa, autentikasi, dan admin |
+| `app/Http/Middleware/AdminMiddleware.php` | Pemeriksaan peran admin |
+| `app/Models` | Model `User`, `Kategori`, `Aspirasi` beserta relasi |
+| `database/migrations` | Skema `users`, `kategoris`, `aspirasis` |
+| `database/seeders` | AdminSeeder, KategoriSeeder, AspirasiSeeder |
+| `resources/views` | Master layout, komponen, halaman publik, siswa, admin |
+| `public/css/app.css` | Design system dan seluruh komponen visual |
+| `deliverables` | Flowchart, ERD, ekspor SQL, daftar akun |
+
+## Rute utama
+
+| Method | URL | Akses |
+| --- | --- | --- |
+| GET | `/` | Publik |
+| GET/POST | `/login`, `/register` | Tamu |
+| POST | `/logout` | Login |
+| GET | `/aspirasi/create` | Siswa |
+| POST | `/aspirasi` | Siswa |
+| GET | `/aspirasi-saya` | Siswa |
+| GET | `/aspirasi/{id}` | Pemilik laporan |
+| GET/PUT/DELETE | `/aspirasi/{id}/edit`, `/aspirasi/{id}` | Pemilik, status Menunggu |
+| GET | `/admin/dashboard` | Admin |
+| GET | `/admin/aspirasi` | Admin |
+| GET | `/admin/aspirasi/{id}` | Admin |
+| PUT/PATCH | `/admin/aspirasi/{id}` | Admin |
+| DELETE | `/admin/aspirasi/{id}` | Admin |
+
+## Catatan keamanan
+
+- Semua form memakai token CSRF, termasuk tombol logout
+- Password disimpan dengan hash bawaan Laravel
+- Login dibatasi lima percobaan per menit per kombinasi email dan IP
+- Foto divalidasi sebagai gambar JPG atau PNG dengan batas 2 MB dan disimpan di `storage/app/public/bukti`
+- Foto ikut terhapus saat laporan dihapus
+- Siswa tidak dapat membuka, mengubah, atau menghapus laporan milik siswa lain
+- Perubahan laporan dikunci setelah status berubah dari Menunggu

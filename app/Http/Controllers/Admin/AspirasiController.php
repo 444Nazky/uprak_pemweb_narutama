@@ -67,7 +67,12 @@ class AspirasiController extends Controller
             'tanggapan.max' => 'Tanggapan maksimal 2000 karakter.',
         ]);
 
-        $data['ditanggapi_pada'] = filled($data['tanggapan']) ? now() : null;
+        if (filled($data['tanggapan'])) {
+            $sudahSama = $aspirasi->tanggapan === $data['tanggapan'] && $aspirasi->ditanggapi_pada !== null;
+            $data['ditanggapi_pada'] = $sudahSama ? $aspirasi->ditanggapi_pada : now();
+        } else {
+            $data['ditanggapi_pada'] = null;
+        }
 
         $aspirasi->update($data);
 

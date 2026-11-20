@@ -12,7 +12,7 @@
     --ka-surface: #ffffff;
     --ka-ink: #101e18;
     --ka-ink-soft: #37473f;
-    --ka-muted: #64746c;
+    --ka-muted: #5f6f67;
     --ka-line: #dbe2da;
     --ka-line-strong: #c3cfc4;
     --ka-primary: #14513f;
@@ -356,6 +356,32 @@ a:hover {
     color: #fff;
 }
 
+.btn-danger {
+    --bs-btn-bg: var(--ka-danger);
+    --bs-btn-border-color: var(--ka-danger);
+    --bs-btn-hover-bg: #7f251f;
+    --bs-btn-hover-border-color: #7f251f;
+    --bs-btn-active-bg: #6d1f1a;
+    --bs-btn-active-border-color: #6d1f1a;
+    --bs-btn-color: #fff;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+    --bs-btn-disabled-bg: #c98a85;
+    --bs-btn-disabled-border-color: #c98a85;
+    color: #fff;
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--ka-ink-soft);
+    --bs-btn-border-color: var(--ka-line-strong);
+    --bs-btn-hover-bg: var(--ka-surface);
+    --bs-btn-hover-border-color: var(--ka-ink-soft);
+    --bs-btn-hover-color: var(--ka-ink);
+    --bs-btn-active-bg: var(--ka-primary-soft);
+    --bs-btn-active-border-color: var(--ka-primary);
+    --bs-btn-active-color: var(--ka-primary-ink);
+}
+
 .btn-sm {
     padding: 7px 12px;
     font-size: 13px;
@@ -477,7 +503,7 @@ textarea.form-control {
 }
 
 .form-control::placeholder {
-    color: #8b9992;
+    color: #66766e;
     opacity: 1;
 }
 
@@ -558,11 +584,11 @@ textarea.form-control {
 }
 
 .ka-hero h1 {
-    font-size: clamp(2.15rem, 4.3vw, 3.45rem);
-    line-height: 1.08;
+    font-size: clamp(2.05rem, 3.7vw, 2.9rem);
+    line-height: 1.1;
     letter-spacing: -0.038em;
     margin: 18px 0 18px;
-    max-width: 15ch;
+    max-width: 24ch;
 }
 
 .ka-hero-copy {

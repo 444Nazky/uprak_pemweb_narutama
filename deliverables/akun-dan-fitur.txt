@@ -1,0 +1,73 @@
+SISTEM KOTAK ASPIRASI SEKOLAH
+SMK Plus Pelita Nusantara Bogor
+Ujian Praktik Kejuruan Pemrograman Web, Kelas XI RPL
+
+==================================================
+DAFTAR AKUN UJI
+==================================================
+
+ADMIN (dibuat melalui AdminSeeder, tidak tersedia di form register)
+Email    : admin@pelitanusantara.sch.id
+Password : admin12345
+Nama     : Rina Kusumawati
+
+SISWA UTAMA
+Email    : siswa@pelitanusantara.sch.id
+Password : siswa12345
+Nama     : Bagas Prakoso
+Kelas    : XI RPL 1
+
+SISWA TAMBAHAN (untuk menguji kepemilikan data dan filter)
+1. nadya.prameswari@pelitanusantara.sch.id / siswa12345 / Nadya Prameswari / XI RPL 2
+2. rafi.hidayat@pelitanusantara.sch.id / siswa12345 / Rafi Hidayat / X TKJ 1
+3. salsabila.rahma@pelitanusantara.sch.id / siswa12345 / Salsabila Rahma / XII AKL 1
+4. yoga.prasetya@pelitanusantara.sch.id / siswa12345 / Yoga Prasetya / XI RPL 1
+
+Catatan: akun siswa tambahan hanya tersedia bila database diisi dengan seeder. Bila memakai file SQL yang disertakan, seluruh akun di atas sudah tersedia.
+
+==================================================
+FITUR PENGEMBANGAN MANDIRI (TOTAL 10 POIN)
+==================================================
+
+1. Pencarian kata kunci pada daftar aspirasi admin (2 poin)
+   Lokasi  : /admin/aspirasi, kolom "Cari laporan"
+   Cakupan : judul, isi pesan, lokasi, dan nama siswa
+   Bukti   : hasil pencarian tetap mempertahankan filter status, kategori, dan urutan
+
+2. Siswa dapat mengubah dan menghapus aspirasi miliknya selama status Menunggu (2 poin)
+   Lokasi  : /aspirasi-saya dan /aspirasi/{id}
+   Aturan  : tombol Ubah dan Hapus hanya muncul saat status Menunggu
+   Bukti   : setelah status menjadi Diproses, server menolak perubahan dan menampilkan pesan
+
+3. Tingkat prioritas Rendah, Sedang, Tinggi beserta pengurutan (3 poin)
+   Lokasi  : form kirim aspirasi, form admin, dan filter "Urutkan"
+   Bukti   : opsi "Prioritas tertinggi" mengurutkan Tinggi, Sedang, Rendah melalui query FIELD
+
+4. Grafik statistik per kategori dan per bulan dengan Chart.js (3 poin)
+   Lokasi  : /admin/dashboard
+   Bukti   : grafik donat jumlah laporan per kategori dan grafik batang enam bulan terakhir, datanya diambil dari query Eloquent
+
+==================================================
+SKENARIO UJI CEPAT
+==================================================
+
+Tamu
+- Buka beranda, cek ringkasan statistik tanpa isi laporan
+- Akses /admin/dashboard dan /aspirasi/create, harus diarahkan ke /login
+- Cek tampilan pada lebar layar ponsel
+
+Siswa
+- Daftar akun baru dengan kelas, lalu kirim aspirasi beserta foto
+- Kosongkan form dan kirim, pastikan pesan validasi muncul dan input lama dipertahankan
+- Buka detail aspirasi milik akun lain, harus 403
+- Ubah dan hapus aspirasi selama status masih Menunggu
+
+Admin
+- Masuk dengan akun admin, cek angka dashboard
+- Cari "AC", filter status Selesai, urutkan berdasarkan prioritas
+- Ubah status menjadi Diproses dan isi tanggapan
+- Hapus satu laporan uji melalui modal konfirmasi
+- Lihat grafik kategori dan bulanan
+
+Verifikasi silang
+- Masuk kembali sebagai siswa, buka detail laporan, pastikan status dan tanggapan admin terlihat

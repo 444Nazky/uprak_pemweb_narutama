@@ -15,14 +15,14 @@ class AspirasiSeeder extends Seeder
         $kategoris = Kategori::pluck('id', 'nama');
 
         $siswa = collect([
-            ['name' => 'Bagas Prakoso', 'kelas' => 'XI RPL 1'],
-            ['name' => 'Nadya Prameswari', 'kelas' => 'XI RPL 2'],
-            ['name' => 'Rafi Hidayat', 'kelas' => 'X TKJ 1'],
-            ['name' => 'Salsabila Rahma', 'kelas' => 'XII AKL 1'],
-            ['name' => 'Yoga Prasetya', 'kelas' => 'XI RPL 1'],
+            ['name' => 'Bagas Prakoso', 'kelas' => 'XI RPL 1', 'email' => 'siswa@pelitanusantara.sch.id'],
+            ['name' => 'Nadya Prameswari', 'kelas' => 'XI RPL 2', 'email' => 'nadya.prameswari@pelitanusantara.sch.id'],
+            ['name' => 'Rafi Hidayat', 'kelas' => 'X TKJ 1', 'email' => 'rafi.hidayat@pelitanusantara.sch.id'],
+            ['name' => 'Salsabila Rahma', 'kelas' => 'XII AKL 1', 'email' => 'salsabila.rahma@pelitanusantara.sch.id'],
+            ['name' => 'Yoga Prasetya', 'kelas' => 'XI RPL 1', 'email' => 'yoga.prasetya@pelitanusantara.sch.id'],
         ])->map(function (array $siswa) {
             return User::firstOrCreate(
-                ['email' => strtolower(str_replace(' ', '.', $siswa['name'])).'@pelitanusantara.sch.id'],
+                ['email' => $siswa['email']],
                 [
                     'name' => $siswa['name'],
                     'kelas' => $siswa['kelas'],
@@ -30,7 +30,7 @@ class AspirasiSeeder extends Seeder
                     'password' => Hash::make('siswa12345'),
                 ],
             );
-        ]);
+        });
 
         $data = [
             ['AC ruang 11 rusak', 'Ruang 11, Gedung A', 'AC di ruang 11 sudah tiga minggu tidak dingin. Saat jam praktik siang ruangan terasa panas dan siswa sulit fokus.', 'Sarana & Prasarana', 'selesai', 'tinggi', 96, 'Teknisi sudah memperbaiki unit AC pada 12 November. Mohon laporkan kembali jika suhu belum normal.', 'Nadya Prameswari'],
